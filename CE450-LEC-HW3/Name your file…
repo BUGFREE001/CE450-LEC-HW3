@@ -1,0 +1,214 @@
+
+#1
+
+def triple(n):
+    return n*3
+
+def square(n):
+    return n**2
+
+def intscts(f, x):
+    def g(f2):
+        return f(x)==f2(x)
+    return g
+    
+at3 = intscts(square, 3)
+print(at3 (triple))
+
+
+----------------------------------------------------------------------------------------------------------------------------
+
+
+#2
+
+def add(g1, g2):
+    def add2(x):
+        return g1(x)+g2(x)
+    return add2
+    
+identity = lambda x: x
+square = lambda x: x**2
+
+a1 = add (identity, square)
+print(a1(4))
+
+a2 = add (a1, identity)
+print(a2(4))
+
+print(a2(5))
+
+a3 = add (a1, a2)
+print(a3(4))
+
+
+
+----------------------------------------------------------------------------------------------------------------------------
+
+
+#3
+
+def f():
+    """
+    >>> f()()(3)()
+    3
+    """
+
+    def f1():
+        def f2(num):
+            def f3():
+                return num
+
+            return f3
+
+        return f2
+
+    return f1
+
+
+----------------------------------------------------------------------------------------------------------------------------
+
+
+#4
+
+def smth(g, dx):
+    f = lambda x : (g(x - dx) + g(x) + g(x + dx)) / 3
+    return f
+    
+square = lambda x: x ** 2
+print(round(smth(square, 1)(0), 3))
+
+
+def cnt_cd(f):
+    def count(n):
+        total=0
+        ptr=1
+        while ptr<=n:
+            if f(n,ptr):
+                total+=1
+            ptr+=1
+        return total    
+    return count
+    
+print(cnt_cd (lambda n, i: n % i == 0)(2)) 
+print(cnt_cd (lambda n, i: n % i == 0)(4)) 
+print(cnt_cd (lambda n, i: n % i == 0)(12)) 
+
+
+
+----------------------------------------------------------------------------------------------------------------------------
+
+
+#6
+
+def card_sum(n):
+    n=int(n)
+    sum=0
+    ptr=0
+    while n>=1:
+        if ptr%2==0:
+            sum+=(n%10)
+        else:
+            if (n%10)*2>9:
+                a=int((n%10)*2)
+                while a>=1:
+                    sum+=a%10
+                    a/=10
+                    a=int(a)     
+            else:
+               sum+=(n%10)*2
+        n/=10
+        n=int(n)
+        ptr+=1
+    return sum
+    
+print(card_sum (2))
+print(card_sum (12))
+print(card_sum (42))
+print(card_sum (138743))
+print(card_sum (5105105105105100))
+print(card_sum (4012888888881881))
+print(card_sum (79927398713))
+
+
+
+----------------------------------------------------------------------------------------------------------------------------
+
+
+#7
+
+def generator(n, operation):
+    def gen(ch):
+        m=letter_to_n(ch)
+        if operation=="add":
+            return n_to_letter(m+n)
+        else:   
+            return n_to_letter(m-n)
+    return gen
+    
+def letter_to_n(c): 
+    return ord(c)-ord('a')
+
+def n_to_letter(n):
+    return chr(ord('a')+n)
+    
+print(letter_to_n ('a'))
+print(letter_to_n ('c'))
+print(n_to_letter (3))
+h = generator(2, "add")
+print(h('a'))
+h = generator(3, "sub")
+print(h('d'))
+
+
+
+----------------------------------------------------------------------------------------------------------------------------
+
+
+#8
+
+def add_one(x):
+    return x + 1
+def times_two(x):
+    return x * 2
+def add_three(x):
+    return x + 3
+    
+def cyc(g1, g2, g3):
+    def op(n):
+        def res(x):
+            if n==0:
+                return x
+            value=x
+            ptr=1
+            while(ptr<=n):
+                if ptr%3==1:
+                    value=g1(value)
+                elif ptr%3==2:
+                    value=g2(value)
+                elif ptr%3==0:
+                    value=g3(value)
+                ptr+=1    
+            return value    
+        return res    
+    return op    
+    
+    
+my_cyc = cyc(add_one, times_two, add_three)
+h= my_cyc(0)
+print(h(5))
+
+h = my_cyc(2)
+print(h(1))
+
+h = my_cyc(3)
+print(h(2))
+
+h = my_cyc(4)
+print(h(2))
+
+h = my_cyc(6)
+print(h(1))
+
+
+
+
