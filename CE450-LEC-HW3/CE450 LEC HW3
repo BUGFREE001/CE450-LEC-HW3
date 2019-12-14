@@ -78,6 +78,13 @@ square = lambda x: x ** 2
 print(round(smth(square, 1)(0), 3))
 
 
+
+----------------------------------------------------------------------------------------------------------------------------
+
+
+
+#5
+
 def cnt_cd(f):
     def count(n):
         total=0
@@ -92,39 +99,6 @@ def cnt_cd(f):
 print(cnt_cd (lambda n, i: n % i == 0)(2)) 
 print(cnt_cd (lambda n, i: n % i == 0)(4)) 
 print(cnt_cd (lambda n, i: n % i == 0)(12)) 
-
-
-
-----------------------------------------------------------------------------------------------------------------------------
-
-
-
-#5
-
-def cnt_cd(f):
-
-    def consqce(n):
-    
-        ct=0
-        for i in range(1,n+1):
-            if(f(n,i)):
-                ct+=1
-        return ct
-    return consqce
-    
-    
-def is_prime(n,i):
-
-    if(i==1):
-        return 0
-    if(i==2):
-        return 1
-    print("i",i)
-    
-    for x in range(2,i):    
-        if(i%x==0):
-            return False
-    return True
 
 
 
